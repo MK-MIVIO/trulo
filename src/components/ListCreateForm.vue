@@ -31,6 +31,7 @@ import { ref } from 'vue'
 export default {
   setup(props, { emit }) {
     const title = ref('')
+
     const submitForm = () => {
       emit('new-list-coming', title.value)
     }
