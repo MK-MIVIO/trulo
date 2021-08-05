@@ -30,8 +30,7 @@ export default {
       type: Array,
     },
   },
-  setup(props) {
-    console.log(props.title)
+  setup() {
     const state = reactive({
       count: 0,
     })
