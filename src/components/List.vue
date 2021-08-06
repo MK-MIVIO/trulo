@@ -7,7 +7,7 @@
     <ul>
       <Card v-for="card in cards" :text="card.text" :key="card.id"></Card>
     </ul>
-    <CardCreateForm />
+    <CardCreateForm :listId="id" />
   </section>
 </template>
 
@@ -25,6 +25,9 @@ export default {
   props: {
     title: {
       type: String,
+    },
+    id: {
+      type: Number,
     },
     cards: {
       type: Array,

@@ -8,7 +8,7 @@
       >Add a card...</a
     >
 
-    <form v-if="formVisible" action="/">
+    <form v-if="formVisible" @submit.prevent="submitForm" action="/">
       <textarea
         v-model="text"
         class="
@@ -43,8 +43,14 @@
 import { reactive, toRefs } from 'vue'
 
 export default {
-  setup() {
+  props: {
+    listId: {
+      type: Number,
+    },
+  },
+  setup(props) {
     const state = reactive({
+      text: '',
       linkVisible: true,
       formVisible: false,
     })
@@ -57,10 +63,19 @@ export default {
       state.formVisible = false
     }
 
+    const submitForm = () => {
+      window.eventBus.emit('new-card-coming', {
+        listId: props.listId,
+        text: state.text,
+      })
+      state.text = ''
+    }
+
     return {
       ...toRefs(state),
       showForm,
       hideForm,
+      submitForm,
     }
   },
 }

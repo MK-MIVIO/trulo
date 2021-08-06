@@ -12,6 +12,7 @@
     <div class="sm:flex items-start w-screen px-4 py-10 overflow-x-auto">
       <List
         v-for="list in lists"
+        :id="list.id"
         :title="list.title"
         :cards="list.cards"
         :key="list.id"
@@ -22,7 +23,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { data } from '@/data.js'
 
 import List from '@/components/List.vue'
@@ -45,7 +46,21 @@ export default {
         title: title,
         cards: [],
       })
-      console.log(lists.value)
+    }
+    //events
+    onMounted(() => {
+      window.eventBus.on('new-card-coming', (event) => {
+        addNewCard(event)
+      })
+    })
+
+    const addNewCard = (data) => {
+      if (!data.text) return
+      let listForNewCard = lists.value.find((list) => list.id === data.listId)
+      listForNewCard.cards.push({
+        id: Math.max(...listForNewCard.cards.map((card) => card.id)) + 1,
+        text: data.text,
+      })
     }
 
     return {

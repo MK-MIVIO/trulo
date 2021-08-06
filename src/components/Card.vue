@@ -15,8 +15,8 @@ export default {
       type: String,
     },
   },
-  setup(props) {
-    console.log(props.text)
+  setup() {
+    // console.log(props.text)
     const state = reactive({})
 
     return {
